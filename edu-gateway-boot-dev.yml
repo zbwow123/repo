@@ -1,0 +1,24 @@
+server:
+  port: 9001
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+    register-with-eureka: true # 是否注册到eureka
+    fetch-registry: true  # 是否寻找注册过的服务
+  instance: # 实例名
+    prefer-ip-address: true # 首选ip
+    instance-id: http://${spring.cloud.client.ip-address}:${server.port}
+spring:
+  application: # spring的app名
+    name: edu-gateway-boot
+  cloud:
+    gateway:
+      routes:
+        - id: edu-routes-ad # 路由名
+          uri: lb://edu-ad-boot # 去注册中心查找的微服务名
+          predicates: # 断言成功后，交给某一个微服务处理时，选择”转发“
+            - Path=/ad/**
+          filters:
+            - StripPrefix=1 # 去掉uri中的第一部分
+

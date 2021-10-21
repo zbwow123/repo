@@ -1,0 +1,22 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: edu-user-boot
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/edu_user?characterEncoding=utf8&useUnicode=true&serverTimezone=UTC
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.246.128
+    port: 6379
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
